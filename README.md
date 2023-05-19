@@ -1,5 +1,5 @@
 # MacierzOdwrotna
-Kod:
-Wpisywanie macierzy przez użytkownika
-Sprawdzanie czy podana macierz jest poprawna
-Formatowanie wyświetlanego wyniku
+Kod:<br>
+Wpisywanie macierzy przez użytkownika<br>
+Sprawdzanie czy podana macierz jest poprawna<br>
+Formatowanie wyświetlanego wyniku<br>
