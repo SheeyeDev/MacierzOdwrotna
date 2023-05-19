@@ -1,7 +1,7 @@
 from matrix import Matrix
+from getData import import_data
 def main():
-    testMatrix = [[-1,2,1],[2,-3,1],[-2,7,9]]
-    matrix = Matrix(testMatrix)
+    matrix = Matrix(import_data())
     matrix.findInverseMatrix()
     matrix.printInverseMatrix()
 
