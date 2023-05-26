@@ -1,0 +1,195 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{polski}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dirtree}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\definecolor{LightGray}{gray}{0.9}
+\usepackage{tocloft}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue
+}
+\newtheorem{example}{Przykład}
+
+\title{Dokumentacja projektu zespołowego nr 3}
+\author{Anna Ćwiklińska, Krystian Gronkowski, Ihor Malyi}
+\date{Maj 2023}
+
+\begin{document}
+\lstset{basicstyle=\ttfamily, columns=fullflexible, upquote=true}
+\renewcommand{\lstlistingname}{Listing}
+
+\maketitle
+\newpage
+{\hypersetup{hidelinks}
+\tableofcontents
+}
+\newpage
+\section{Treść zadania}
+Zaimplementować znajdowanie macierzy odwrotnej metodą Gaussa-Jordana (metoda powinna działać przynajmniej dla macierzy do stopnia 6).
+
+\section{Teoretyczny opis metody}
+Metoda Gaussa-Jordana jest jedną z technik rozwiązujących układy równań liniowych i znajdujących macierze odwrotne. Jej celem jest przekształcenie macierzy wejściowej do postaci macierzy jednostkowej poprzez elementarne operacje na wierszach. Główna idea metody polega na wykorzystaniu operacji elementarnych takich jak dodawanie wielokrotności jednego wiersza do innego w celu wyzerowania elementów pozostających pod i nad główną przekątną. Po wykonaniu tych operacji na macierzy wejściowej, otrzymuje się macierz jednostkową po lewej stronie, a macierz odwrotna znajduje się po prawej stronie.\\
+
+Niech $A$ będzie macierzą kwadratową stopnia $n$.
+\begin{enumerate}
+    \item     Skonstruuj macierz rozszerzoną $[A|I]$, gdzie $I$ jest macierzą jednostkową stopnia $n$.
+\item     Dla $k$ od $1$ do $n$ wykonuj następujące kroki:
+\begin{enumerate}
+    \item Jeśli element $a_{kk}$ jest równy zero, zamień wiersze $k$ i $j$ z poniższego kroku, gdzie $j$ jest najmniejszym indeksem większym lub równym $k$ taki, że $a_{jk} \neq 0$. Jeżeli taki indeks $j$ nie istnieje, macierz $A$ jest osobliwa, a metoda Gaussa-Jordana nie może być zastosowana.
+\item Pomnóż $k$-ty wiersz przez $1/a_{kk}$, aby uzyskać jedynkę na przekątnej.
+\item Dla każdego wiersza $i$ różnego od $k$, od $1$ do $n$, wykonaj operację elementarną odejmowania wielokrotności $a_{ik}$-krotności $k$-tego wiersza od $i$-tego wiersza, aby wyzerować element $a_{ik}$.
+\end{enumerate}
+    Otrzymasz macierz rozszerzoną w postaci $[I|B]$, gdzie $B$ jest macierzą odwrotną do macierzy $A$.
+\end{enumerate}
+Warto zauważyć, że jeśli macierz $A$ jest osobliwa, czyli nie ma odwrotności, to nie będzie możliwe wykonanie wszystkich kroków powyższej metody, ponieważ krok (2a) wymaga istnienia elementu niezerowego w każdym kroku.
+
+\begin{example}
+Szukamy macierzy odwrotnej do macierzy 3. stopnia:
+$$
+A = 
+\left[
+\begin{array}{ccc}
+1 & 2 & 3 \\
+1 & 1 & 0 \\
+0 & 2 & 3 \\
+\end{array}
+\right]
+$$
+
+$$
+\left[
+\begin{array}{ccccccc}
+1& 2 & 3 & \vrule & 1 & 0 & 0 \\
+1 & 1 & 0 & \vrule & 0 & 1 & 0 \\
+0 & 2 & 3 & \vrule & 0 & 0 & 1
+\end{array} 
+\right]
+\begin{matrix}
+    \sim\\
+    w_2-w_1\\
+\end{matrix}
+\left[
+\begin{array}{ccccccc}
+1& 2 & 3 & \vrule & 1 & 0 & 0 \\
+0 & -1 & -3 & \vrule & -1 & 1 & 0 \\
+0 & 2 & 3 & \vrule & 0 & 0 & 1
+\end{array} 
+\right]
+\begin{matrix}
+    \sim\\
+    -1 w_2
+\end{matrix}
+$$
+$$
+\left[
+\begin{array}{ccccccc}
+1& 2 & 3 & \vrule & 1 & 0 & 0 \\
+0 & 1 & 3 & \vrule & 1 & -1 & 0 \\
+0 & 2 & 3 & \vrule & 0 & 0 & 1
+\end{array} 
+\right]
+\begin{matrix}
+\\
+    \sim\\
+    w_1 - 2 w_2\\
+    w_3 - 2 w_2 
+\end{matrix}
+\left[
+\begin{array}{ccccccc}
+1& 0 & -3 & \vrule & -1 & 2 & 0 \\
+0 & 1 & 3 & \vrule & 1 & -1 & 0 \\
+0 & 0 & -3 & \vrule & -2 & 2 & 1
+\end{array} 
+\right]
+\begin{matrix}
+    \sim\\
+    \frac{w_3}{-3}\\
+\end{matrix}
+$$
+$$
+\left[
+\begin{array}{ccccccc}
+1& 0 & -3 & \vrule & -1 & 2 & 0 \\
+0 & 1 & 3 & \vrule & 1 & -1 & 0 \\
+0 & 0 & 1 & \vrule & \frac{2}{3} & -\frac{2}{3} & -\frac{1}{3}
+\end{array} 
+\right]
+\begin{matrix}
+\\
+    \sim\\
+    w_1 + 3 w_3\\
+    w_2 - 3 w_3 
+\end{matrix} 
+\left[
+\begin{array}{ccccccc}
+1& 0 & 0 & \vrule & 1 & 0 & -1 \\
+0 & 1 & 0 & \vrule & -1 & 1 & 1 \\
+0 & 0 & 1 & \vrule & \frac{2}{3} & -\frac{2}{3} & -\frac{1}{3}
+\end{array} 
+\right]
+$$
+
+Zatem rozwiązaniem jest macierz:
+$$
+A^{-1} = 
+\left[
+\begin{array}{ccc}
+1 & 0 & -1 \\
+-1 & 1 & 1 \\
+\frac{2}{3} & -\frac{2}{3} & -\frac{1}{3} \\
+\end{array}
+\right]
+$$
+\end{example}
+\section{Opis programu}
+
+\section{Opis algorytmu}
+
+\section{Instrukcja użytkowania}
+\subsection{Dane wejściowe}
+\subsection{Dane wyjściowe}
+\section{Struktura plików}
+% \dirtree{%
+%     .1 newtonVSbisection.
+%     .2 bisection.py.
+%     .2 main.py.
+%     .2 method.py.
+%     .2 newton.py.
+% }
+\subsection{Opis struktury plików}
+
+\section{Raport z demonstracji}
+\label{sec:raport}
+Po uruchomieniu programu w terminalu wyświetla się menu, jak pokazano na Rys. \ref{fig:menu}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{menu.png}
+\caption{Menu programu}
+\label{fig:menu}
+\end{figure}
+\section{Wnioski}
+\section{Kod programu}
+\section*{Bibliografia}
+\begin{thebibliography}{}
+	
+\bibitem{Jaruszewska-Walczak}
+Jaruszewska-Walczak, D. Wykład z Algorytmów numerycznych.
+
+\bibitem{Kincaid}
+Kincaid, D., \& Cheney, W. \emph{Analiza numeryczna}.
+
+\bibitem{Tatjewski}
+Tatjewski, P. \emph{Metody numeryczne}
+	
+\end{thebibliography}
+\end{document}
