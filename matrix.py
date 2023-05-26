@@ -8,7 +8,6 @@ class Matrix():
                     self.inverse[x][y]=0
                 else:
                     self.inverse[x][y]=1
-        pass
 
     def findInverseMatrix(self):
         self.checkSwaps()
@@ -36,10 +35,9 @@ class Matrix():
             self.matrix[swap2][x] = tmp
 
     def printInverseMatrix(self):
-        for x in range(len(self.inverse)):
-            for y in range(len(self.inverse[x])):
-                print(self.inverse[x][y],end=" ")
-            print("")
+        pattern = '{:>25.7g} ' * len(self.inverse[0])
+        for row in self.inverse:
+            print(pattern.format(*row))
 
     def substractRow(self,subFrom,tosub,howManyTimes):
         for x in range(len(self.matrix[subFrom])):
