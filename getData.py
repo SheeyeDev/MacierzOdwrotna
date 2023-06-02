@@ -13,7 +13,7 @@ def import_data():
                 for x in range(len(values)):
                     try:
                         if abs(float(values[x])) > math.pow(10, 20):
-                            print(f"Liczba musi byc > {math.pow(10, 20)}. Błąd przy odczytie liczby {values[x]}")
+                            print(f"Liczba musi być < {math.pow(10, 20)}. Błąd przy odczycie liczby {values[x]}")
                             exit()
                         row.append(float(values[x]))
                     except ValueError:
