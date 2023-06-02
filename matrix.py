@@ -25,7 +25,7 @@ class Matrix():
                         self.swapRows(x,y)
                         break
                     elif y==len(self.matrix)-1:
-                        print("Dla podanej macierzy nie da się ustalić macierzy odwrotnej.")
+                        print("Dla podanej macierzy nie da się ustalić macierzy odwrotnej metodą Gaussa-Jordana.")
                         exit()
 
     def swapRows(self,swap1,swap2):
