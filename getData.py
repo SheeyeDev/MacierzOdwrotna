@@ -13,11 +13,11 @@ def import_data():
                 for x in range(len(values)):
                     try:
                         if abs(float(values[x])) > math.pow(10, 20):
-                            print(f"Liczba musi byc > {math.pow(10, 20)}. Błąd przy odczycie liczby {values[x]}")
+                            print(f"Liczba musi byc > {math.pow(10, 20)}. Błąd przy odczytie liczby {values[x]}")
                             exit()
                         row.append(float(values[x]))
                     except ValueError:
-                        print(f"Błąd: nie można przekonwertować wartości {values[x]} na liczby całkowite!")
+                        print(f"Błąd: nie można przekonwertować wartości {values[x]} na liczbę!")
                         exit()
                 data.append(row)
     except FileNotFoundError:

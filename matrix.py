@@ -12,6 +12,9 @@ class Matrix():
     def findInverseMatrix(self):
         self.checkSwaps()
         for x in range(len(self.matrix)):
+            if self.matrix[x][x]==0:
+                print("Dla podanej macierzy nie da się ustalić macierzy odwrotnej metodą Gaussa-Jordana.")
+                exit()
             self.divideRow(x,1/self.matrix[x][x])
             for y in range(len(self.matrix)):
                 if y != x:
@@ -31,6 +34,9 @@ class Matrix():
     def swapRows(self,swap1,swap2):
         for x in range(len(self.matrix[swap1])):
             tmp = self.matrix[swap1][x]
+            tmp2 = self.inverse[swap1][x]
+            self.inverse[swap1][x] = self.inverse[swap2][x]
+            self.inverse[swap2][x] = tmp2
             self.matrix[swap1][x]=self.matrix[swap2][x]
             self.matrix[swap2][x] = tmp
 

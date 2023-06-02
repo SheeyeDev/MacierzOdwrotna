@@ -3,9 +3,9 @@ from getData import import_data
 
 
 def main():
-    print("Dokładność do 7 liczby po przecinku.")
     matrix = Matrix(import_data())
     matrix.findInverseMatrix()
+    print("Dokładność do 7 liczby po przecinku.\nMacierz odwrotna:")
     matrix.printInverseMatrix()
 
 
