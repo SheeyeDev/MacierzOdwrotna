@@ -57,7 +57,7 @@ Szukamy macierzy odwrotnej do macierzy 3. stopnia:
 $$
 A = 
 \left[
-\begin{array}{ccc}
+\begin{array}{rrr}
 1 & 2 & 3 \\
 1 & 1 & 0 \\
 0 & 2 & 3 \\
@@ -65,9 +65,9 @@ A =
 \right]
 $$
 
-$$
-\left[
-\begin{array}{ccccccc}
+\begin{flalign*}
+& \left[
+\begin{array}{rrrrrrr}
 1& 2 & 3 & \vrule & 1 & 0 & 0 \\
 1 & 1 & 0 & \vrule & 0 & 1 & 0 \\
 0 & 2 & 3 & \vrule & 0 & 0 & 1
@@ -78,20 +78,19 @@ $$
     w_2-w_1\\
 \end{matrix}
 \left[
-\begin{array}{ccccccc}
+\begin{array}{rrrrrrr}
 1& 2 & 3 & \vrule & 1 & 0 & 0 \\
 0 & -1 & -3 & \vrule & -1 & 1 & 0 \\
 0 & 2 & 3 & \vrule & 0 & 0 & 1
 \end{array} 
 \right]
+\\
 \begin{matrix}
     \sim\\
     -1 w_2
 \end{matrix}
-$$
-$$
-\left[
-\begin{array}{ccccccc}
+& \left[
+\begin{array}{rrrrrrr}
 1& 2 & 3 & \vrule & 1 & 0 & 0 \\
 0 & 1 & 3 & \vrule & 1 & -1 & 0 \\
 0 & 2 & 3 & \vrule & 0 & 0 & 1
@@ -104,20 +103,19 @@ $$
     w_3 - 2 w_2 
 \end{matrix}
 \left[
-\begin{array}{ccccccc}
+\begin{array}{rrrrrrr}
 1& 0 & -3 & \vrule & -1 & 2 & 0 \\
 0 & 1 & 3 & \vrule & 1 & -1 & 0 \\
 0 & 0 & -3 & \vrule & -2 & 2 & 1
 \end{array} 
 \right]
+\\
 \begin{matrix}
     \sim\\
-    \frac{w_3}{-3}\\
+    -\frac{1}{3}w_3\\
 \end{matrix}
-$$
-$$
-\left[
-\begin{array}{ccccccc}
+& \left[
+\begin{array}{rrrrrrr}
 1& 0 & -3 & \vrule & -1 & 2 & 0 \\
 0 & 1 & 3 & \vrule & 1 & -1 & 0 \\
 0 & 0 & 1 & \vrule & \frac{2}{3} & -\frac{2}{3} & -\frac{1}{3}
@@ -130,19 +128,19 @@ $$
     w_2 - 3 w_3 
 \end{matrix} 
 \left[
-\begin{array}{ccccccc}
+\begin{array}{rrrrrrr}
 1& 0 & 0 & \vrule & 1 & 0 & -1 \\
 0 & 1 & 0 & \vrule & -1 & 1 & 1 \\
 0 & 0 & 1 & \vrule & \frac{2}{3} & -\frac{2}{3} & -\frac{1}{3}
 \end{array} 
 \right]
-$$
+\end{flalign*}
 
 Zatem rozwiązaniem jest macierz:
 $$
 A^{-1} = 
 \left[
-\begin{array}{ccc}
+\begin{array}{rrr}
 1 & 0 & -1 \\
 -1 & 1 & 1 \\
 \frac{2}{3} & -\frac{2}{3} & -\frac{1}{3} \\
@@ -151,34 +149,168 @@ A^{-1} =
 $$
 \end{example}
 \section{Opis programu}
+Celem programu jest wyznaczenie macierzy odwrotnej macierzy podanej przez użytkownika za pomocą metody Gaussa-Jordana.Program jest napisany w języku Python3. Nie korzysta z zewnętrznych bibliotek, importuje tylko bibliotekę standardową Pythona \verb|math|, która jest używana w pliku \verb|get_data| do wykonywania operacji matematycznych.
 
 \section{Opis algorytmu}
+\begin{enumerate}
+\item Początek programu znajduje się w funkcji \verb|main()|. W pierwszej kolejności użytkownik informowany jest o dokładności obliczeń.
+\item Program importuje dane do macierzy przy użyciu funkcji \verb|import_data| z pliku \verb|getData.py|. Zaimportowane dane są przekazywane do konstruktora obiektu klasy \verb|Matrix|.
+\item Konstruktor klasy \verb|Matrix| inicjalizuje macierz wejściową i macierz odwrotną. Macierz odwrotna jest inicjalizowana jako macierz jednostkowa.
+\item Metoda \verb|findInverseMatrix()| znajduje macierz odwrotną. 
+\begin{enumerate}
+    \item Najpierw wywoływana jest metoda \verb|checkSwaps()|, która sprawdza, czy występują zera na diagonalnej macierzy wejściowej i w~razie potrzeby zamienia wiersze za pomocą metody \verb|swapRows()|. Jeśli nie jest możliwe ustalenie macierzy odwrotnej, program wypisuje komunikat i kończy działanie.
+    \item Następnie, przy użyciu pomocniczej metody \verb|divideRow()|, dla każdego wiersza macierzy wejściowej dokonywany jest podział wiersza przez element diagonalny, aby przekształcić go w jedynkę.
+    \item Dla każdego wiersza różnego od aktualnego, za pomocą metody \verb|substractRow()| aktualny wiersz jest odejmowany od pozostałych wierszy odpowiednią ilość razy, aby przekształcić ich elementy  w~zera.
+\end{enumerate}
+\item W funkcji \verb|main()| wywoływana jest metoda \verb|printInverseMatrix()|, która wypisuje macierz odwrotną w sformatowanej formie.
+\end{enumerate}
 
 \section{Instrukcja użytkowania}
 \subsection{Dane wejściowe}
 \subsection{Dane wyjściowe}
 \section{Struktura plików}
-% \dirtree{%
-%     .1 newtonVSbisection.
-%     .2 bisection.py.
-%     .2 main.py.
-%     .2 method.py.
-%     .2 newton.py.
-% }
+\dirtree{%
+    .1 MacierzOdwrotna.
+    .2 data.txt.
+    .2 getData.py.
+    .2 main.py.
+    .2 matrix.py.
+}
 \subsection{Opis struktury plików}
+\begin{itemize}
+    \item Folder \verb|MacierzOdwrotna| zawiera wszystkie pliki niezbędne do funkcjonowania programu.
+    \item Plik \verb|data.txt| jest plikiem tekstowym, który przeznaczony jest do przekazania danych wejściowych do programu. Plik ten zawiera macierz kwadratową, której odwrotność ma za zadanie wyznaczyć program.
+    \item Plik \verb|getData.py| odpowiada za pobranie danych z pliku \verb|data.txt|. Zawiera funkcję \verb|import_data()|, która otwiera plik z danymi i pobiera z niego macierz wejściową, sprawdzając przy tym poprawność wartości.
+    \item Plik \verb|main.py|, który odpowiada za główne wykonanie programu.
+    \item \verb|matrix.py| zawiera klasę \verb|Matrix|, w której zdefiniowane są funkcje: \begin{itemize}
+        \item \verb|findInverseMatrix()|
+        \item \verb|checkSwaps()|
+        \item \verb|swapRows()| \verb|swap1| \verb|swap2|
+        \item \verb|printInverseMatrix()|
+        \item \verb|substractRow()|, \verb|subFrom|, \verb|tosub|, \verb|howManyTimes|
+        \item \verb|divideRow()|, która przyjmuje argumenty \verb|divideFrom| oraz \verb|divider|. Funkcja ta odpowiada za dzielenie danego wiersza macierzy przez stałą
+    \end{itemize}
+\end{itemize}
 
 \section{Raport z demonstracji}
-\label{sec:raport}
-Po uruchomieniu programu w terminalu wyświetla się menu, jak pokazano na Rys. \ref{fig:menu}.
+% \label{sec:raport}
+% Po uruchomieniu programu w terminalu wyświetla się menu, jak pokazano na Rys. \ref{fig:menu}.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textwidth]{menu.png}
-\caption{Menu programu}
-\label{fig:menu}
-\end{figure}
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\textwidth]{menu.png}
+% \caption{Menu programu}
+% \label{fig:menu}
+% \end{figure}
 \section{Wnioski}
 \section{Kod programu}
+\subsection{get\_data.py}
+\begin{minted}[breaklines]{python}
+def import_data():
+    data = []
+    try:
+        with open("./data.txt") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                values = line.split()
+                row = []
+                for x in range(len(values)):
+                    try:
+                        if abs(float(values[x])) > math.pow(10, 20):
+                            print(
+                                f"Liczba musi byc > {math.pow(10, 20)}. Błąd przy odczytie liczby {values[x]}"
+                            )
+                            exit()
+                        row.append(float(values[x]))
+                    except ValueError:
+                        print(
+                            f"Błąd: nie można przekonwertować wartości {values[x]} na liczby całkowite!"
+                        )
+                        exit()
+                data.append(row)
+    except FileNotFoundError:
+        print("Błąd: plik nie istnieje!")
+        exit()
+    rows_count = len(data)
+    for row in data:
+        if len(row) != rows_count:
+            print(
+                f"Macierz nie jest kwadratowa. Liczba wierszy {rows_count}, liczba kolumn {len(row)}."
+            )
+            exit()
+
+    return data
+
+\end{minted}
+\subsection{main.py}
+\begin{minted}[breaklines]{python}
+    def main():
+        print("Dokładność do 7 liczby po przecinku.")
+        matrix = Matrix(import_data())
+        matrix.findInverseMatrix()
+        matrix.printInverseMatrix()
+
+
+if __name__ == "__main__":
+    main()
+\end{minted}
+\subsection{matrix.py}
+\begin{minted}[breaklines]{python}
+class Matrix:
+    def __init__(self, matrix) -> None:
+        self.matrix = matrix
+        self.inverse = [[0 for x in range(len(matrix[0]))] for x in range(len(matrix))]
+        for x in range(len(self.inverse)):
+            for y in range(len(self.inverse[x])):
+                if x != y:
+                    self.inverse[x][y] = 0
+                else:
+                    self.inverse[x][y] = 1
+
+    def findInverseMatrix(self):
+        self.checkSwaps()
+        for x in range(len(self.matrix)):
+            self.divideRow(x, 1 / self.matrix[x][x])
+            for y in range(len(self.matrix)):
+                if y != x:
+                    self.substractRow(y, x, self.matrix[y][x] / self.matrix[x][x])
+
+    def checkSwaps(self):
+        for x in range(len(self.matrix)):
+            if self.matrix[x][x] == 0:
+                for y in range(len(self.matrix)):
+                    if self.matrix[y][x] != 0 and self.matrix[x][y] != 0:
+                        self.swapRows(x, y)
+                        break
+                    elif y == len(self.matrix) - 1:
+                        print(
+                            "Dla podanej macierzy nie da się ustalić macierzy odwrotnej."
+                        )
+                        exit()
+
+    def swapRows(self, swap1, swap2):
+        for x in range(len(self.matrix[swap1])):
+            tmp = self.matrix[swap1][x]
+            self.matrix[swap1][x] = self.matrix[swap2][x]
+            self.matrix[swap2][x] = tmp
+
+    def printInverseMatrix(self):
+        pattern = "{:>25.7g} " * len(self.inverse[0])
+        for row in self.inverse:
+            print(pattern.format(*row))
+
+    def substractRow(self, subFrom, tosub, howManyTimes):
+        for x in range(len(self.matrix[subFrom])):
+            self.matrix[subFrom][x] -= self.matrix[tosub][x] * howManyTimes
+            self.inverse[subFrom][x] -= self.inverse[tosub][x] * howManyTimes
+
+    def divideRow(self, divideFrom, divider):
+        for x in range(len(self.matrix[divideFrom])):
+            self.matrix[divideFrom][x] *= divider
+            self.inverse[divideFrom][x] *= divider
+\end{minted}
 \section*{Bibliografia}
 \begin{thebibliography}{}
 	
